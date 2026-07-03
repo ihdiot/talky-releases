@@ -208,7 +208,8 @@
   .art-typed{font-family:var(--font-mono);font-size:14px;color:var(--cyan)}
 
   /* download */
-  .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+  .dl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px}
+  @media(max-width:1080px){.dl-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:860px){.dl-grid{grid-template-columns:1fr}}
   .dl-card{
     display:flex;flex-direction:column;position:relative;
@@ -356,7 +357,7 @@
 <main>
   <!-- ── HERO ─────────────────────────────────── -->
   <section class="hero wrap">
-    <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.1</span> · Windows</span>
+    <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.1</span> · Windows + Mac</span>
     <h1>Talk like an <span class="spoken">IHDIOT</span>.<br>Type like a pro.</h1>
     <p class="sub">Talky is AI dictation that runs <strong>entirely on your PC</strong>. Tap the hotkey, say the thing, tap it again — your words type themselves while you talk. In a text box they land at your cursor; nothing focused and they're captured, ready to paste. <strong>No cloud. No account. Nothing ever leaves your machine.</strong></p>
 
@@ -388,7 +389,7 @@
       <span><span class="tick">✓</span> no subscription</span>
       <span><span class="tick">✓</span> free during alpha</span>
     </p>
-    <p class="os-note" id="os-note">Heads up — Talky is a <b>Windows</b> app. Send this page to your PC and grab it there.</p>
+    <p class="os-note" id="os-note">Heads up — Talky runs on <b>Windows and Apple Silicon Macs</b>. Send this page to your computer and grab it there.</p>
   </section>
 
   <!-- ── HOW IT WORKS ─────────────────────────── -->
@@ -425,35 +426,42 @@
     <div class="reveal">
       <p class="kicker">Download</p>
       <h2>Pick your build</h2>
-      <p class="lede">Latest release: <strong id="ver2" style="color:var(--text)">v0.12.1</strong><span id="rel-date"></span>. Windows 10 or newer. An NVIDIA GPU makes it fast; CPU-only works too, just slower and with a lighter model.</p>
+      <p class="lede">Latest release: <strong id="ver2" style="color:var(--text)">v0.12.1</strong><span id="rel-date"></span>. Windows 10 or newer, or an Apple Silicon Mac. On Windows an NVIDIA GPU makes it fast; CPU-only works too, just slower and with a lighter model.</p>
     </div>
     <div class="dl-grid">
       <div class="dl-card rec-card reveal">
-        <span class="rec-tag">Most people want this</span>
+        <span class="rec-tag">Windows</span>
         <h3>Talky</h3>
         <div class="fname">talky-hideable.exe</div>
         <p>The standard app. Lives in your tray, console hidden, starts clean. Downloads the speech model on first launch.</p>
         <div class="meta" id="size-hideable">&nbsp;</div>
         <a class="dl-btn primary" id="dl-hideable" href="https://github.com/ihdiot/talky-releases/releases/latest/download/talky-hideable.exe">Download .exe</a>
       </div>
-      <div class="dl-card reveal" style="transition-delay:.1s">
+      <div class="dl-card rec-card reveal" style="transition-delay:.1s">
+        <span class="rec-tag">Mac</span>
+        <h3>Talky</h3>
+        <div class="fname" id="fname-mac">Talky-Portable-macos-arm64.zip</div>
+        <p>Apple Silicon (M-series), alpha. Model included — unzip, double-click <code>Talky.command</code>, allow the mic. The Terminal window stays open while Talky runs.</p>
+        <div class="meta" id="size-mac">&nbsp;</div>
+        <a class="dl-btn primary" id="dl-mac" href="https://github.com/ihdiot/talky-releases/releases/latest">Download .zip</a>
+      </div>
+      <div class="dl-card reveal" style="transition-delay:.2s">
         <h3>Portable</h3>
         <div class="fname" id="fname-portable">Talky-Portable-win64.zip</div>
-        <p>No install, no first-run download — the model is already inside. Unzip anywhere and run. Best for locked-down or offline machines.</p>
+        <p>No install, no first-run download — the model is already inside. Unzip anywhere and run. Best for locked-down or offline Windows machines.</p>
         <div class="meta" id="size-portable">&nbsp;</div>
         <a class="dl-btn ghost" id="dl-portable" href="https://github.com/ihdiot/talky-releases/releases/latest">Download .zip</a>
       </div>
-      <div class="dl-card reveal" style="transition-delay:.2s">
+      <div class="dl-card reveal" style="transition-delay:.3s">
         <h3>Console</h3>
         <div class="fname">talky.exe</div>
-        <p>The same app with a visible console window — handy when troubleshooting or reporting a bug.</p>
+        <p>The same Windows app with a visible console window — handy when troubleshooting or reporting a bug.</p>
         <div class="meta" id="size-console">&nbsp;</div>
         <a class="dl-btn ghost" id="dl-console" href="https://github.com/ihdiot/talky-releases/releases/latest/download/talky.exe">Download .exe</a>
       </div>
     </div>
     <div class="dl-foot">
       <a href="https://github.com/ihdiot/talky-releases/releases" target="_blank" rel="noopener">All releases &amp; changelogs →</a>
-      <span>Mac build: in validation — coming soon.</span>
     </div>
     <details class="sha reveal">
       <summary>Verify your download (optional, for the careful ones)</summary>
@@ -546,7 +554,7 @@
     <div class="faq">
       <details class="qa reveal">
         <summary>What do I need to run it?</summary>
-        <div class="a">Windows 10 or newer and a microphone. An NVIDIA GPU makes transcription near-instant with the big model; on CPU-only machines Talky picks a lighter model — still solid, just a bit slower.</div>
+        <div class="a">Windows 10 or newer — or an Apple Silicon Mac (M1 and up) — plus a microphone. On Windows an NVIDIA GPU makes transcription near-instant with the big model; on CPU-only machines Talky picks a lighter model — still solid, just a bit slower. M-series Macs handle it comfortably on the chip alone.</div>
       </details>
       <details class="qa reveal">
         <summary>Is it free?</summary>
@@ -554,7 +562,7 @@
       </details>
       <details class="qa reveal">
         <summary>Mac version?</summary>
-        <div class="a">Built and in validation on real hardware now. Join the <a href="https://discord.gg/9cPXmabrdU" target="_blank" rel="noopener">Discord</a> if you want to know the moment it drops.</div>
+        <div class="a">Live now — alpha, Apple Silicon (M1 and newer). Grab the Mac zip from the downloads above: unzip, double-click <code>Talky.command</code>, and allow microphone access when macOS asks. It's not signed yet, so if Gatekeeper balks, right-click → Open — or approve it under System Settings → Privacy &amp; Security. Intel Macs aren't supported. Rough edges go to the <a href="https://discord.gg/9cPXmabrdU" target="_blank" rel="noopener">Discord</a>.</div>
       </details>
       <details class="qa reveal">
         <summary>Does it auto-send my messages?</summary>
@@ -662,15 +670,21 @@
           document.getElementById('fname-portable').textContent = a.name;
           document.getElementById('dl-portable').href = a.browser_download_url;
         }
+        if (/^Talky-Portable-.*macos-arm64\.zip$/.test(a.name)){
+          document.getElementById('size-mac').textContent = human(a.size);
+          document.getElementById('fname-mac').textContent = a.name;
+          document.getElementById('dl-mac').href = a.browser_download_url;
+        }
       });
     })
     .catch(function(){ /* fallbacks stay */ });
 })();
 
-/* ── gentle note for non-Windows visitors (most link-drops get opened on phones) ── */
+/* ── gentle note for phone/other visitors (most link-drops get opened on phones) ── */
 (function(){
   var ua = navigator.userAgent;
-  if (!/Windows/.test(ua)){
+  var isMacDesktop = /Macintosh/.test(ua) && !/iPhone|iPad/.test(ua);
+  if (!/Windows/.test(ua) && !isMacDesktop){
     document.getElementById('os-note').style.display = 'block';
   }
 })();
