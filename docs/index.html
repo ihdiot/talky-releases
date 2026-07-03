@@ -374,9 +374,9 @@
     </div>
 
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/ihdiot/talky-releases/releases/latest/download/talky-hideable.exe">
+      <a class="btn btn-primary" id="hero-dl" href="https://github.com/ihdiot/talky-releases/releases/latest/download/talky-hideable.exe">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v13m0 0 5-5m-5 5-5-5M4 21h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Download for Windows
+        <span id="hero-dl-label">Download for Windows</span>
       </a>
       <a class="btn btn-ghost" href="#download">All builds</a>
     </div>
@@ -665,17 +665,24 @@
         if (/^Talky-Portable-.*macos-arm64\.zip$/.test(a.name)){
           document.getElementById('size-mac').textContent = human(a.size);
           document.getElementById('dl-mac').href = a.browser_download_url;
+          if (/Macintosh/.test(navigator.userAgent) && !/iPhone|iPad/.test(navigator.userAgent)){
+            document.getElementById('hero-dl').href = a.browser_download_url;
+          }
         }
       });
     })
     .catch(function(){ /* fallbacks stay */ });
 })();
 
-/* ── gentle note for phone/other visitors (most link-drops get opened on phones) ── */
+/* ── gentle note for phone/other visitors (most link-drops get opened on phones);
+     Mac desktops get the hero button swapped to the Mac build instead ── */
 (function(){
   var ua = navigator.userAgent;
   var isMacDesktop = /Macintosh/.test(ua) && !/iPhone|iPad/.test(ua);
-  if (!/Windows/.test(ua) && !isMacDesktop){
+  if (isMacDesktop){
+    document.getElementById('hero-dl-label').textContent = 'Download for Mac';
+    document.getElementById('hero-dl').href = 'https://github.com/ihdiot/talky-releases/releases/latest';
+  } else if (!/Windows/.test(ua)){
     document.getElementById('os-note').style.display = 'block';
   }
 })();
