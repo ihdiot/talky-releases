@@ -58,9 +58,12 @@ for xf, hf in bars:
 # wordmark
 d.text((LX + ls + 44, ly - 44), "Talky", font=f_name, fill=TEXT)
 
-# tagline + sub
-d.text((LX, 392), "Offline AI dictation for Windows", font=f_tag, fill=TEXT)
-d.text((LX, 462), "Hold a key. Talk. It types. Your voice never leaves your PC.",
+# tagline: the slogan, IHDIOT in brand cyan (drawn in colored segments) + descriptor
+x = LX
+for seg, col in (("Talk like an ", TEXT), ("IHDIOT", CYAN), (". Type like a pro.", TEXT)):
+    d.text((x, 392), seg, font=f_tag, fill=col)
+    x += d.textlength(seg, font=f_tag)
+d.text((LX, 462), "Offline AI dictation for Windows — nothing ever leaves your PC.",
        font=f_sub, fill=MUTED)
 
 # decorative waveform strip along the bottom

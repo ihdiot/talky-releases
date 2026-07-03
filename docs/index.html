@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talky — offline AI dictation for Windows</title>
-<meta name="description" content="Hold a key, talk, and it types. Talky runs Whisper entirely on your machine — no cloud, no account, your voice never leaves your PC.">
+<title>Talky — Talk like an IHDIOT. Type like a pro.</title>
+<meta name="description" content="Offline AI dictation for Windows. Tap a hotkey, talk, tap again — your words type themselves, and nothing ever leaves your PC.">
 <link rel="canonical" href="https://ihdiot.github.io/talky-releases/">
 <meta name="theme-color" content="#07090c">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Talky — offline AI dictation for Windows">
-<meta property="og:description" content="Hold a key, talk, and it types. Whisper runs on your machine — your voice never leaves it. Free during alpha.">
+<meta property="og:title" content="Talky — Talk like an IHDIOT. Type like a pro.">
+<meta property="og:description" content="Offline AI dictation for Windows. Tap a hotkey, talk, tap again — it types itself, and nothing ever leaves your PC. Free during alpha.">
 <meta property="og:url" content="https://ihdiot.github.io/talky-releases/">
 <meta property="og:image" content="https://ihdiot.github.io/talky-releases/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -79,6 +79,9 @@
   .wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
     font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:-.02em}
   .wordmark svg{display:block}
+  .wordmark .stack{display:flex;flex-direction:column;line-height:1.05}
+  .wordmark .byline{font-family:var(--font-mono);font-size:10px;font-weight:400;
+    letter-spacing:.08em;color:var(--dim);margin-top:3px}
   .nav-links{display:flex;gap:26px;align-items:center;font-size:15px}
   .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s}
   .nav-links a:hover{color:var(--cyan)}
@@ -135,15 +138,19 @@
   .rec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);
     animation:pulse 1s ease-in-out infinite}
   .demo-card.listening .rec{display:inline-flex}
-  .demo-body{padding:26px 22px 24px;min-height:110px;display:flex;flex-direction:column;gap:16px}
-  .wave{display:none;align-items:flex-end;gap:3.5px;height:30px}
-  .demo-card.listening .wave{display:flex}
+  /* Every demo region keeps a CONSTANT height — the card must never grow or
+     shrink mid-cycle, or the whole page below it pumps up and down. The wave
+     row reserves its space via visibility (not display), and the typed area
+     is a fixed two-line box. */
+  .demo-body{padding:26px 22px 24px;display:flex;flex-direction:column;gap:16px}
+  .wave{display:flex;visibility:hidden;align-items:flex-end;gap:3.5px;height:30px;flex:none}
+  .demo-card.listening .wave{visibility:visible}
   .wave span{width:4px;border-radius:2px;background:var(--cyan);opacity:.85;
     animation:wob .55s ease-in-out infinite alternate}
   @keyframes wob{from{height:15%}to{height:100%}}
   .typed{
     font-family:var(--font-mono);font-size:clamp(15px,2.4vw,18px);color:var(--text);
-    min-height:2.6em;word-break:break-word}
+    height:3.4em;overflow:hidden;word-break:break-word}
   .typed .caret{display:inline-block;width:9px;height:1.15em;vertical-align:-.18em;
     background:var(--cyan);margin-left:2px;animation:blink 1s steps(1) infinite;
     box-shadow:0 0 10px var(--cyan-glow)}
@@ -173,8 +180,11 @@
 
   /* ── sections ───────────────────────────────── */
   section{padding:84px 0 0}
-  .kicker{font-family:var(--font-mono);font-size:12.5px;font-weight:600;letter-spacing:.18em;
+  .kicker{font-family:var(--font-mono);font-size:14.5px;font-weight:700;letter-spacing:.18em;
     text-transform:uppercase;color:var(--cyan)}
+  /* extra air before the SmartScreen section — it sat nearly touching the
+     verify-download tile above it */
+  section#smartscreen{padding-top:130px}
   h2{font-family:var(--font-display);font-weight:800;letter-spacing:-.02em;
     font-size:clamp(28px,4.4vw,42px);margin:10px 0 14px}
   .lede{color:var(--muted);max-width:620px}
@@ -332,7 +342,7 @@
       <rect x="11.7" y="6"  width="2.6" height="14" rx="1.3" fill="#21d9ff"/>
       <rect x="16.9" y="9"  width="2.6" height="8"  rx="1.3" fill="#21d9ff"/>
     </svg>
-    Talky
+    <span class="stack">Talky<span class="byline">made by an idiot</span></span>
   </a>
   <nav class="nav-links">
     <a href="#how">How it works</a>
@@ -347,13 +357,13 @@
   <!-- ── HERO ─────────────────────────────────── -->
   <section class="hero wrap">
     <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.1</span> · Windows</span>
-    <h1>Hold a key. Talk.<br><span class="spoken">It types.</span></h1>
-    <p class="sub">Talky is AI dictation that runs <strong>entirely on your PC</strong>. Hold a hotkey, say the thing, release — the words land wherever your cursor is. <strong>No cloud. No account. No audio ever leaves your machine.</strong></p>
+    <h1>Talk like an <span class="spoken">IHDIOT</span>.<br>Type like a pro.</h1>
+    <p class="sub">Talky is AI dictation that runs <strong>entirely on your PC</strong>. Tap the hotkey, say the thing, tap it again — your words type themselves while you talk. In a text box they land at your cursor; nothing focused and they're captured, ready to paste. <strong>No cloud. No account. Nothing ever leaves your machine.</strong></p>
 
     <div class="demo-card" id="demo" aria-label="Demo of Talky typing spoken words">
       <div class="demo-head">
         <span class="rec">REC</span>
-        <span class="keys"><span style="margin-right:4px">hold</span><kbd>Ctrl</kbd><kbd>Win</kbd></span>
+        <span class="keys"><span style="margin-right:4px">tap</span><kbd>Ctrl</kbd><kbd>Win</kbd></span>
       </div>
       <div class="demo-body">
         <div class="wave" aria-hidden="true">
@@ -391,20 +401,20 @@
     <div class="steps">
       <div class="step reveal">
         <span class="num">01</span>
-        <h3>Hold the hotkey</h3>
-        <p>Press and hold your chosen key combo. Talky starts listening only while it's held.</p>
+        <h3>Tap the hotkey</h3>
+        <p>One tap and Talky starts listening. No holding anything down — ramble as long as you want.</p>
         <div class="art"><kbd>Ctrl</kbd><span style="color:var(--dim)">+</span><kbd>Win</kbd></div>
       </div>
       <div class="step reveal" style="transition-delay:.1s">
         <span class="num">02</span>
         <h3>Say the thing</h3>
-        <p>Whisper — the same class of AI the big cloud services use — transcribes it right on your CPU or GPU.</p>
+        <p>Whisper — the same class of AI the big cloud services use — transcribes on your CPU or GPU, and your words type out live every time you pause.</p>
         <div class="art"><div class="art-wave"><i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.05s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.08s"></i><i style="animation-delay:.12s"></i><i style="animation-delay:.03s"></i></div></div>
       </div>
       <div class="step reveal" style="transition-delay:.2s">
         <span class="num">03</span>
-        <h3>Release — it types</h3>
-        <p>Your words are typed at the cursor, with smart punctuation and your personal dictionary applied.</p>
+        <h3>Tap again — done</h3>
+        <p>In a text box, everything lands at your cursor with smart punctuation and your personal dictionary. Nothing focused? It's captured and ready to paste.</p>
         <div class="art"><span class="art-typed">gg go next_</span></div>
       </div>
     </div>
@@ -590,17 +600,19 @@
   var card = document.getElementById('demo');
   var out = document.getElementById('typed-text');
   var hint = document.getElementById('demo-hint');
+  // Short phrases on purpose: each must fit the fixed two-line .typed box on
+  // a phone, or the demo card changes height and the page pumps up and down.
   var phrases = [
-    "this whole sentence was spoken, not typed.",
-    "works in discord, docs, game chat — anywhere there's a cursor.",
-    "no cloud. runs right on your own gpu.",
+    "this was spoken, not typed.",
+    "works anywhere you can type.",
+    "no cloud. just your own gpu.",
     "ok chat — gg go next."
   ];
   if (reduced){ out.textContent = phrases[0]; hint.textContent = "// typed by voice"; return; }
   var i = 0;
   function listen(){
     out.textContent = "";
-    hint.textContent = "// listening…";
+    hint.textContent = "// listening — tap again when you're done";
     card.classList.add('listening');
     setTimeout(type, 1700);
   }
