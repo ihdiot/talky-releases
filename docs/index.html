@@ -355,7 +355,7 @@
 <main>
   <!-- ── HERO ─────────────────────────────────── -->
   <section class="hero wrap">
-    <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.1</span> · Windows + Mac</span>
+    <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.4</span> · Windows + Mac</span>
     <h1>Talk like an <span class="spoken">IHDIOT</span>.<br>Type like a pro.</h1>
     <p class="sub">Talky is AI dictation that runs <strong>entirely on your computer</strong>. Tap the hotkey and just talk — a quick reply or a whole saga — and watch your words type themselves out live. Tap again, done. <strong>No cloud. No account. Nothing ever leaves your machine.</strong></p>
 
@@ -387,7 +387,7 @@
       <span><span class="tick">✓</span> no subscription</span>
       <span><span class="tick">✓</span> free during alpha</span>
     </p>
-    <p class="os-note" id="os-note">Heads up — Talky runs on <b>Windows and Apple Silicon Macs</b>. Send this page to your computer and grab it there.</p>
+    <p class="os-note" id="os-note">Talky is a computer app — <b>Windows and Apple Silicon Macs</b>, no phone version yet. Send this page to your computer and grab it there.</p>
   </section>
 
   <!-- ── HOW IT WORKS ─────────────────────────── -->
@@ -423,7 +423,7 @@
     <div class="reveal">
       <p class="kicker">Download</p>
       <h2>Pick your build</h2>
-      <p class="lede">Latest release: <strong id="ver2" style="color:var(--text)">v0.12.1</strong><span id="rel-date"></span>. Windows 10 or newer, or an Apple Silicon Mac. On Windows an NVIDIA GPU makes it fast; CPU-only works too, just slower and with a lighter model.</p>
+      <p class="lede">Latest release: <strong id="ver2" style="color:var(--text)">v0.12.4</strong><span id="rel-date"></span>. Windows 10 or newer, or an Apple Silicon Mac. On Windows an NVIDIA GPU makes it fast; CPU-only works too, just slower and with a lighter model.</p>
     </div>
     <div class="dl-grid">
       <div class="dl-card rec-card reveal">
@@ -436,7 +436,7 @@
       <div class="dl-card rec-card reveal" style="transition-delay:.1s">
         <span class="rec-tag">Mac</span>
         <h3>Talky</h3>
-        <p>Apple Silicon (M-series), alpha. Model included — unzip, double-click <code>Talky.command</code>, allow the mic. The Terminal window stays open while Talky runs.</p>
+        <p>Apple Silicon (M-series), alpha. Model included — unzip, double-click <code>Talky.app</code>, allow the mic. It lives in the menu bar, no Terminal window.</p>
         <div class="meta" id="size-mac">&nbsp;</div>
         <a class="dl-btn primary" id="dl-mac" href="https://github.com/ihdiot/talky-releases/releases/latest">Download .zip</a>
       </div>
@@ -528,9 +528,9 @@
         </ul>
       </div>
       <div class="priv-card leave reveal" style="transition-delay:.1s">
-        <h3>Ever touches the internet</h3>
+        <h3>The only things that touch the internet</h3>
         <ul>
-          <li>First launch downloads the speech model itself (skip it with the Portable zip — the model's inside)</li>
+          <li>First launch downloads the speech model (skip that with the Portable or Mac zip — the model's already inside)</li>
           <li>An optional, off-by-default check for new versions</li>
           <li>That's the whole list. No telemetry, no analytics, no account.</li>
         </ul>
@@ -555,7 +555,7 @@
       </details>
       <details class="qa reveal">
         <summary>Mac version?</summary>
-        <div class="a">Live now — alpha, Apple Silicon (M1 and newer). Grab the Mac zip from the downloads above: unzip, double-click <code>Talky.command</code>, and allow microphone access when macOS asks. It's not signed yet, so if Gatekeeper balks, right-click → Open — or approve it under System Settings → Privacy &amp; Security. Intel Macs aren't supported. Rough edges go to the <a href="https://discord.gg/9cPXmabrdU" target="_blank" rel="noopener">Discord</a>.</div>
+        <div class="a">Live now — alpha, Apple Silicon (M1 and newer). Grab the Mac zip from the downloads above: unzip, double-click <code>Talky.app</code>, and allow microphone access when macOS asks. It's not signed yet, so the first open may be blocked — sometimes silently, so if nothing happens: System Settings → Privacy &amp; Security → "Open Anyway" right after you double-click (on older macOS, right-click → Open works too). One time only. Intel Macs aren't supported. Rough edges go to the <a href="https://discord.gg/9cPXmabrdU" target="_blank" rel="noopener">Discord</a>.</div>
       </details>
       <details class="qa reveal">
         <summary>Does it auto-send my messages?</summary>
@@ -665,7 +665,7 @@
         if (/^Talky-Portable-.*macos-arm64\.zip$/.test(a.name)){
           document.getElementById('size-mac').textContent = human(a.size);
           document.getElementById('dl-mac').href = a.browser_download_url;
-          if (/Macintosh/.test(navigator.userAgent) && !/iPhone|iPad/.test(navigator.userAgent)){
+          if (window.talkyPlatform === 'mac'){
             document.getElementById('hero-dl').href = a.browser_download_url;
           }
         }
@@ -674,12 +674,24 @@
     .catch(function(){ /* fallbacks stay */ });
 })();
 
-/* ── gentle note for phone/other visitors (most link-drops get opened on phones);
-     Mac desktops get the hero button swapped to the Mac build instead ── */
+/* ── platform routing (most link-drops get opened on phones):
+     phones/tablets — the hero button must NOT hand them an .exe; it points at
+       the builds section and the "computer app" note shows.
+     Mac desktops — hero button swaps to the Mac build.
+     NOTE: modern iPadOS claims "Macintosh" in its UA; the touch check is what
+     tells a real Mac from an iPad. Runs BEFORE the release-API fetch, which
+     reads window.talkyPlatform to decide whether to swap the hero href. ── */
 (function(){
   var ua = navigator.userAgent;
-  var isMacDesktop = /Macintosh/.test(ua) && !/iPhone|iPad/.test(ua);
-  if (isMacDesktop){
+  var isTouch = 'ontouchend' in document;
+  var isMobile = /iPhone|iPad|iPod|Android/.test(ua) || (/Macintosh/.test(ua) && isTouch);
+  var isMacDesktop = /Macintosh/.test(ua) && !isTouch;
+  window.talkyPlatform = isMobile ? 'mobile' : (isMacDesktop ? 'mac' : 'other');
+  if (isMobile){
+    document.getElementById('hero-dl-label').textContent = 'See the builds';
+    document.getElementById('hero-dl').href = '#download';
+    document.getElementById('os-note').style.display = 'block';
+  } else if (isMacDesktop){
     document.getElementById('hero-dl-label').textContent = 'Download for Mac';
     document.getElementById('hero-dl').href = 'https://github.com/ihdiot/talky-releases/releases/latest';
   } else if (!/Windows/.test(ua)){
