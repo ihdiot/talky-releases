@@ -355,7 +355,7 @@
 <main>
   <!-- ── HERO ─────────────────────────────────── -->
   <section class="hero wrap">
-    <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.7</span> · Windows + Mac</span>
+    <span class="badge"><span class="dot"></span> Early alpha · <span id="ver">v0.12.8</span> · Windows + Mac</span>
     <h1>Talk like an <span class="spoken">IHDIOT</span>.<br>Type like a pro.</h1>
     <p class="sub">Talky is AI dictation that runs <strong>entirely on your computer</strong>. Tap the hotkey and just talk — a quick reply or a whole saga — and watch your words type themselves out live. Tap again, done. <strong>No cloud. No account. Nothing ever leaves your machine.</strong></p>
 
@@ -423,7 +423,7 @@
     <div class="reveal">
       <p class="kicker">Download</p>
       <h2>Pick your build</h2>
-      <p class="lede">Latest release: <strong id="ver2" style="color:var(--text)">v0.12.7</strong><span id="rel-date"></span>. Windows 10 or newer, or an Apple Silicon Mac. On Windows an NVIDIA GPU makes it fast; CPU-only works too, just slower and with a lighter model.</p>
+      <p class="lede">Latest release: <strong id="ver2" style="color:var(--text)">v0.12.8</strong><span id="rel-date"></span>. Windows 10 or newer, or an Apple Silicon Mac. On Windows an NVIDIA GPU makes it fast; CPU-only works too, just slower and with a lighter model.</p>
     </div>
     <div class="dl-grid">
       <div class="dl-card rec-card reveal">
@@ -438,7 +438,7 @@
         <h3>Talky</h3>
         <p>Apple Silicon (M-series), alpha. Model included — unzip, double-click <code>Talky.app</code>, allow the mic. Lives in the menu bar, no Terminal window. On Mac for now, your words are copied — paste them with <b>⌘V</b> (hold Command, tap V) or <b>right-click → Paste</b>. Cursor-typing is coming.</p>
         <div class="meta" id="size-mac">&nbsp;</div>
-        <a class="dl-btn primary" id="dl-mac" href="https://github.com/ihdiot/talky-releases/releases/latest">Download .zip</a>
+        <a class="dl-btn primary" id="dl-mac" href="https://github.com/ihdiot/talky-releases/releases/download/v0.12.7/Talky-Portable-0.12.7-macos-arm64.zip">Download .zip</a>
       </div>
       <div class="dl-card reveal" style="transition-delay:.2s">
         <h3>Portable</h3>
@@ -693,7 +693,7 @@
     document.getElementById('os-note').style.display = 'block';
   } else if (isMacDesktop){
     document.getElementById('hero-dl-label').textContent = 'Download for Mac';
-    document.getElementById('hero-dl').href = 'https://github.com/ihdiot/talky-releases/releases/latest';
+    document.getElementById('hero-dl').href = 'https://github.com/ihdiot/talky-releases/releases/download/v0.12.7/Talky-Portable-0.12.7-macos-arm64.zip';
   } else if (!/Windows/.test(ua)){
     document.getElementById('os-note').style.display = 'block';
   }
