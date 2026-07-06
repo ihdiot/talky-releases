@@ -429,9 +429,10 @@
       <div class="dl-card rec-card reveal">
         <span class="rec-tag">Windows</span>
         <h3>Talky</h3>
-        <p>The standard app. Lives in your tray, console hidden, starts clean. Downloads the speech model on first launch.</p>
-        <div class="meta" id="size-hideable">&nbsp;</div>
-        <a class="dl-btn primary" id="dl-hideable" href="https://github.com/ihdiot/talky-releases/releases/latest/download/talky-hideable.exe">Download .exe</a>
+        <p>A tidy folder — unzip and run <code>Talky.exe</code> (sits in your tray, grabs the speech model on first launch). <code>Uninstall Talky.exe</code> is right beside it for a one-click clean removal whenever you want out.</p>
+        <div class="meta" id="size-win">&nbsp;</div>
+        <a class="dl-btn primary" id="dl-win" href="https://github.com/ihdiot/talky-releases/releases/latest">Download .zip</a>
+        <a id="dl-hideable" href="https://github.com/ihdiot/talky-releases/releases/latest/download/talky-hideable.exe" style="display:block;margin-top:12px;font-size:13px;color:var(--dim);text-decoration:none">Just want one file? Grab the single .exe →</a>
       </div>
       <div class="dl-card rec-card reveal" style="transition-delay:.1s">
         <span class="rec-tag">Mac</span>
@@ -656,8 +657,16 @@
         document.getElementById('rel-date').textContent = " · " + dt.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
       }
       (d.assets || []).forEach(function(a){
-        if (a.name === 'talky-hideable.exe') document.getElementById('size-hideable').textContent = human(a.size);
         if (a.name === 'talky.exe') document.getElementById('size-console').textContent = human(a.size);
+        /* The default Windows download: the small folder-zip (app + a clickable
+           Uninstall Talky.exe). Matches "Talky-<ver>-win64.zip" but NOT the big
+           "Talky-Portable-...win64.zip". */
+        if (/^Talky-\d[\d.]*-win64\.zip$/.test(a.name)){
+          document.getElementById('size-win').textContent = human(a.size);
+          document.getElementById('dl-win').href = a.browser_download_url;
+          if (window.talkyPlatform === 'other')
+            document.getElementById('hero-dl').href = a.browser_download_url;
+        }
         if (/^Talky-Portable-.*win64\.zip$/.test(a.name)){
           document.getElementById('size-portable').textContent = human(a.size);
           document.getElementById('dl-portable').href = a.browser_download_url;
